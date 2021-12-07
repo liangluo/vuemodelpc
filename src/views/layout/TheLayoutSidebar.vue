@@ -14,10 +14,14 @@
 </template>
 <script>
 import TheLayoutSubSidebar from './TheLayoutSubSidebar'
-import { mapState } from 'vuex'
-
+import storage from '@/utils/storage'
 export default {
   name: 'TheLayoutSidebar',
+  data() {
+    return {
+      user: storage.getStorage('user')
+    }
+  },
   props: ['openNav'],
   components: {
     'the-submenu': TheLayoutSubSidebar
@@ -25,8 +29,7 @@ export default {
   computed: {
     selectMenu () {
       return this.$route.meta.menuPath || this.$route.path
-    },
-    ...mapState(['user'])
+    }
   }
 }
 </script>

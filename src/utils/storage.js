@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 /*
     storage 主要放项目中的storage相关操作：存取等
 */
@@ -52,7 +52,7 @@ const storage = {
     return Date.parse(new Date());
   },
   addCookie(key, value, expiresTime) {
-    const cookieString = `${key}=${escape(value)}`;
+    let cookieString = `${key}=${escape(value)}`;
     if (expiresTime > 0) {
       const date = new Date();
       date.setTime(date.getTime() + expiresTime);

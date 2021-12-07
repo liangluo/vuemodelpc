@@ -1,58 +1,81 @@
 import { request } from '../utils/request'
-import storage from '../utils/storage'
-import staticRouter from '@/router/staticRouter'
 
+// 登录
 export const requestLogin = params => {
-  return request('/api/user/login', params).then(data => {
-    storage.setStorage('user-token', JSON.stringify(data.token))
-    return data
-  })
+  return request('/hbwl/rest/admin/login', params)
+};
+// 用户列表
+export const userList = (params, currentPage, pageSize) => {
+  return request(`/hbwl/rest/admin/findListByPage?page=${currentPage}&pageCount=${pageSize}`, params);
+};
+// 用户新增或修改
+export const userSave = (params) => {
+  if (!params.adminId) {
+    return request('/hbwl/rest/admin/add', params);
+  } else {
+    return request('/hbwl/rest/admin/update', params);
+  }
+};
+// 用户id查询详情
+export const requestUserId = params => {
+  return request(`/hbwl/rest/admin/findById/${params.id}`, params, { method: 'get' })
 }
 
-export const requestRegister = params => {
-  return request('/api/user/register', params)
-}
+// 删除用户
+export const userDelete = params => {
+  return request(`/hbwl/rest/admin/delete/${params.id}`, params, { method: 'get' })
+};
 
-export const requestUserInfo = params => {
-  return request('/api/user/info', params).then(res => {
-    // 过滤菜单
-    const filterUserMenu = function (menus, accessMenu) {
-      menus.forEach(function (m) {
-        if (m.noMenu) {
-          return
-        }
-        if (m.children) {
-          const subMenu = []
-          filterUserMenu(m.children, subMenu)
-          if (subMenu.length > 0) {
-            const _aMenu = Object.assign({}, m)
-            _aMenu.children = subMenu
-            accessMenu.push(_aMenu)
-          }
-        } else {
-          res.permissions.some(p => p.name === m.name) && accessMenu.push(m)
-        }
-      })
-    }
-    const accessMenu = []
-    let menus = []
-    staticRouter.forEach(r => {
-      menus = r.menu ? menus.concat(r.children) : menus
-    })
-    filterUserMenu(menus, accessMenu)
-    res.accessMenu = accessMenu
-    return res
-  })
+// 菜单列表
+export const requestMenuList = (params, currentPage, pageSize) => {
+  return request(`/hbwl/rest/menu/findListByPage?page=${currentPage}&pageCount=${pageSize}`, params)
+};
+// 菜单查询所有列表
+export const requestMenuListAll = (params) => {
+  return request(`/hbwl/rest/menu/findList`, params)
+};
+// 角色列表
+export const requestPermissionList = (params, currentPage, pageSize) => {
+  return request(`hbwl/rest/role/findListByPage?page=${currentPage}&pageCount=${pageSize}`, params)
 }
-export const requestLogout = params => {
-  return request('/api/user/logout', params)
+// 角色新增
+export const requestPermissionAdd = params => {
+  return request('/hbwl/rest/role/add', params)
 }
-export const requestChangePassword = params => {
-  return request('/api/user/changePassword', params)
+// 角色删除
+export const requestPermissionDel = params => {
+  return request(`/hbwl/rest/role/delete/${params.id}`, params, { method: 'get' })
 }
-export const requestUserQuery = params => {
-  return request('/api/user/query', params)
+// 角色编辑
+export const requestPermissionEdit = params => {
+  return request('/hbwl/rest/role/update', params)
 }
-export const requestPermissionsQuery = params => {
-  return request('/api/user/permissions', params)
+// 角色查询查单
+export const requestPermissionId = params => {
+  return request(`/hbwl/rest/menu/findRoleId/${params.id}`, params, { method: 'get' })
 }
+// 企业列表
+export const requestEntList = (params, currentPage, pageSize) => {
+  return request(`/hbwl/rest/ent/findListByPage?page=${currentPage}&pageCount=${pageSize}`, params)
+};
+// 企业新增/修改
+export const requestEntAdd = params => {
+  if (!params.entId) {
+    return request('/hbwl/rest/ent/add', params)
+  } else {
+    return request('/hbwl/rest/ent/update', params)
+  }
+}
+// 企业删除
+export const requestEntDel = params => {
+  return request(`/hbwl/rest/ent/delete/${params.id}`, params, { method: 'get' })
+}
+// 子企业列表
+export const requestChindEntList = params => {
+  return request(`/hbwl/rest/ent/findList`, params)
+}
+// 操作记录
+export const requestHandler = (params, currentPage, pageSize) => {
+  return request(`/hbwl/rest/sysOperlog/findListByPage?page=${currentPage}&pageCount=${pageSize}`, params)
+};
+

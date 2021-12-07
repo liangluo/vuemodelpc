@@ -13,7 +13,6 @@ export default {
 <style scoped>
 .page-sub-main {
   color: #666666;
-  min-height: 100%;
   overflow: visible;
   min-width: fit-content;
 }
@@ -22,5 +21,6 @@ export default {
   background-color: #ffffff;
   padding: 20px;
   min-height: 100%;
+  height: 100%;
 }
 </style>

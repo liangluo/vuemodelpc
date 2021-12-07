@@ -1,4 +1,5 @@
 const path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin');
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -7,7 +8,7 @@ function resolve (dir) {
 process.env.VUE_APP_VERSION = process.env.BUILD_NUMBER || '-'
 
 module.exports = {
-  outputDir: 'vueModelPc', // build后文件目录
+  outputDir: 'wgMgr', // build后文件目录
   filenameHashing: true, // 静态资源带hash
   lintOnSave: false, // 保存时是否用eslint-loader来lint代码
   runtimeCompiler: false, // 是否使用包含运行时编译的Vue内核版本，可以在vue中使用template,应用增加10Kb左右；
@@ -20,9 +21,24 @@ module.exports = {
       .set('@', resolve('src')) // 设置路径别名
       .set('@pages', resolve('src/views/pages')) // 设置路径别名
   },
+  configureWebpack: (config) => {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        plugins: [
+          new CompressionPlugin({
+            algorithm: 'gzip',
+            test: /\.js$|\.html$|\.css$/,
+            threshold: 1000,
+            deleteOriginalAssets: false,
+            minRatio: 0.8
+          })
+        ]
+      };
+    }
+  },
   devServer: {
     open: true, // 自动打开浏览器配置
-    host: '127.0.0.1', // 启动地址
+    host: 'localhost', // 启动地址
     port: 8080, // 端口
     https: false,
     hotOnly: true, // 热更新
@@ -31,24 +47,20 @@ module.exports = {
       errors: false
     },
     proxy: (() => {
-      if (!process.env.VUE_APP_BACK_END_URL) {
-        return false
-      } else {
-        // 代理转发
-        const _basePath = process.env.VUE_APP_BASE_PATH.endsWith('/')
-          ? process.env.VUE_APP_BASE_PATH
-          : process.env.VUE_APP_BASE_PATH + '/'
-        const _path = _basePath + 'api/'
-        const result = {}
-        result[_path] = {
-          target: process.env.VUE_APP_BACK_END_URL,
-          changeOrigin: true,
-          pathRewrite: {}
-        }
-        result[_path].pathRewrite['^' + _path] = '/'
-        return result
+      // 代理转发
+      const _basePath = process.env.VUE_APP_BASE_PATH.endsWith('/')
+        ? process.env.VUE_APP_BASE_PATH
+        : process.env.VUE_APP_BASE_PATH + '/'
+      const _path = _basePath + 'api/'
+      const result = {}
+      result[_path] = {
+        target: 'http://www.zxinhb.com',
+        changeOrigin: true,
+        pathRewrite: {}
       }
+      result[_path].pathRewrite['^' + _path] = '/'
+      return result
     })()
   },
-  publicPath: process.env.VUE_APP_BASE_PATH || '/' // 系统路径
+  publicPath: process.env.NODE_ENV === 'production' ? '/wgMgr/' : '/'
 }

@@ -25,15 +25,39 @@ export default {
           // 一个页面一个对象，以name确定（对应静态路由表里面的name）
           name: 'index'
         }, {
-          name: 'level4'
-        }, {
-          name: 'userPassword'
+          name: 'classifymanage'
         }, {
           name: 'userPermissions'
         }, {
-          name: 'level4Detail',
-          // permission存储数据级权限控制
-          permission: ['modify', 'delete']
+          name: 'labelmanage'
+        }, {
+          name: 'informationmanage'
+        }, {
+          name: 'videomanage'
+        }, {
+          name: 'actmanage'
+        }, {
+          name: 'scenmanage'
+        }, {
+          name: 'pagemanage'
+        }, {
+          name: 'columnmanage'
+        }, {
+          name: 'advermanage'
+        }, {
+          name: 'searchword'
+        }, {
+          name: 'actquery'
+        }, {
+          name: 'scenquery'
+        }, {
+          name: 'userManagement'
+        }, {
+          name: 'menuManagement'
+        }, {
+          name: 'userPermissions'
+        }, {
+          name: 'userHandlerecord'
         }
       ]
     })

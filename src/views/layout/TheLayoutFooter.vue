@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    MIT Licensed | Copyright © 2020-present  luoliang
+    Copyright © 2021-present
   </footer>
 </template>
 <script>

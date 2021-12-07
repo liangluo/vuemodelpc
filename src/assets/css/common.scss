@@ -105,6 +105,9 @@ a:active {
     text-decoration: underline;
     color: #f60;
 }
+:focus {
+    outline: none;
+}
 
 /* Chrome 滚动条优化 */
 * {
@@ -134,4 +137,83 @@ a:active {
 /* [theme] support theme change */
 .theme-bg-blue{
     background-color: #409eff;
-  }
+}
+.page-sub-main {
+    min-height: calc(100% - 40px);
+}
+.zZindex{
+    z-index: 8001!important;
+}
+//element样式重置
+.el-message-box__wrapper{
+    z-index: 8000!important;
+}
+.el-card{
+    margin-bottom: 10px;
+}
+.el-card__body{
+    padding:0 20px;
+}
+.el-form-item{
+    margin-bottom:20px;
+}
+.el-form-item__label{
+    padding:0;
+}
+.el-breadcrumb{
+    margin-bottom:10px;
+}
+.el-form{
+    padding-top: 20px;
+}
+
+.el-dialog{
+    width:auto!important;
+    max-width: 50%;
+}
+.el-dialog__body{
+    padding:10px 20px;
+}
+.el-drawer__header{
+    font-size: 18px;
+    margin-bottom:5px;
+    background-color: #409EFF;
+    color: #fff;
+    padding:0 20px;
+    line-height: 40px;
+}
+.ql-editor{
+    min-height: 300px;
+}
+.el-drawer__body{
+    overflow-y: auto;
+    padding-bottom: 30px;
+}
+.el-input--suffix .el-input__inner{
+    padding-right: 20px!important;
+}
+.el-drawer__body .el-radio{
+    margin-right: 67px;
+}
+.el-drawer__body  .el-radio:last-child{
+    margin-right: 0;
+}
+// 公共输入框长度
+.search-input{
+    width: 180px!important;
+    margin-right: 15px;
+}
+.input-middle{
+    width: 80%!important;
+}
+.input-samll{
+    width: 100px!important;
+}
+.pagination{
+    padding:10px 0;
+}
+.tips{
+    font-size: 12px;
+    color:#bbb;
+    line-height: 24px;
+}
